@@ -3,6 +3,8 @@ const Course = ({course}) =>{
       <div>
         <Header name={course.name}/>
         <Content parts={course.parts}/>
+        <Total parts={course.parts} />
+        
       </div>
   )
 }
@@ -16,9 +18,9 @@ const Header = ({name}) => {
 const Content = ({parts}) => {
   return(
     <div>
-      <Part parts={parts[0]} />
-      <Part parts={parts[1]} />
-      <Part parts={parts[2]} />
+     <Part parts={parts[0]} />
+     <Part parts={parts[1]} />
+     <Part parts={parts[2]} />
     </div>
   )
 }
@@ -27,6 +29,17 @@ const Part = ({parts}) => {
   return(
     <div>
       {parts.name} {parts.exercises}
+    </div>
+  )
+}
+
+const Total = ({parts}) => {
+  return(
+    <div>
+      <p>
+        total of {parts[0].exercises + parts[1].exercises 
+        + parts[2].exercises} exercises
+      </p>
     </div>
   )
 }
@@ -48,7 +61,7 @@ const App =() => {
       },
       {
         name: 'Using props to pass data',
-        exercise: 7,
+        exercises: 7,
         id: 2
       },
       {
