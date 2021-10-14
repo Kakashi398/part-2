@@ -1,44 +1,44 @@
 const Course = ({course}) =>{
   return(
       <div>
-        <Header name={course.name}/>
+        <Header name = {course.name} />
         <Content parts={course.parts}/>
         <Total parts={course.parts} />
-        
       </div>
   )
 }
 
 const Header = ({name}) => {
   return(
-    <h1>{name}</h1>
+    <h2>{name}</h2>
   )
 }
 
 const Content = ({parts}) => {
   return(
-    <div>
-     <Part parts={parts[0]} />
-     <Part parts={parts[1]} />
-     <Part parts={parts[2]} />
-    </div>
+    <>
+    {parts.map (parts => 
+    <Part key={parts.id} parts={parts}/>)}
+    </>
+     
   )
 }
 
 const Part = ({parts}) => {
   return(
-    <div>
-      {parts.name} {parts.exercises}
-    </div>
+    <>
+      <p>{parts.name} {parts.exercises}</p>
+    </>
   )
 }
 
 const Total = ({parts}) => {
+  const total = parts.reduce((sum,parts) => sum + parts.exercises, 0)
+  
   return(
     <div>
       <p>
-        total of {parts[0].exercises + parts[1].exercises 
-        + parts[2].exercises} exercises
+        <strong>total of {total} exercises</strong>
       </p>
     </div>
   )
@@ -48,32 +48,40 @@ const Total = ({parts}) => {
 
 
 
-const App =() => {
+const App = () => {
   const course = {
-    id: 1,
-    name: 'Half Stack application development',
-
-    parts: [
-      {
-        name:'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      }
-    ]
-  }
-  
-  return(
-   <Course course={course} />
+   
+      id: 1,
+      name: 'Half Stack application development',
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    } 
+    
+  return (
+    <div>
+      
+    <Course course={course} />
+    </div>
   )
 }
 
