@@ -36,12 +36,12 @@ const App =() => {
   : persons.filter(person=> person.important === true)
 
 
-  // const names = persons.map(person => person.name)
-  // // console.log(names);
+  const names = persons.map(person => person.name)
+  console.log(names);
 
-  // if( names.includes(newName)) {
-  //   alert(`${newName} is already added to phonebook`)
-  // }
+  if( names.includes(newName)) {
+    alert(`${newName} is already added to phonebook`)
+  }
   
   return(
     <div>
