@@ -61,6 +61,13 @@ const App =() => {
     console.log(event.target.value);
   }
 
+  const handleDelete = (id, name) => {
+    if(window.confirm(`do you want to delete ${name}`)) {
+      NumberService
+    .remove(id)
+    }
+  }
+
   const nameToShow = persons
   ? persons
   : persons.filter(person=> person.important === true)
@@ -81,7 +88,7 @@ const App =() => {
 
       <h2>Numbers</h2> 
      
-    <Persons nameToShow={nameToShow} />
+    <Persons nameToShow={nameToShow} remove={handleDelete} />
     </div>
   )
 }
