@@ -2,24 +2,21 @@ import { useEffect, useState } from "react";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import axios from "axios";
+import numberService from "./services/Numbers";
 
 
 const App =() => {
-  const [ persons, setPersons ] = useState([
-    
-    
-  ])
-  
+  const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState(0)
 
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    numberService
+    .getAll()
+    .then(initialNumbers => {
+      setPersons(initialNumbers)
+    })
   }, [])
 
   const addName = (event) => {
@@ -30,13 +27,17 @@ const App =() => {
       number: newNumber
     }
 
-    axios
-    .post('http://localhost:3001/persons',nameObject)
-    .then(response => response)
+    numberService
+    .create(nameObject)
+    .then(response => {
+      setPersons(persons.concat(response.data))
+      setNewName('')
+      setNewNumber('')
+    })
 
-    setPersons(persons.concat(nameObject))
-    setNewName('')
-    setNewNumber('')
+    // setPersons(persons.concat(nameObject))
+    // setNewName('')
+    // setNewNumber('')
   }
 
   const handleNameChange = (event) => {
