@@ -1,43 +1,54 @@
 import { useEffect, useState } from "react";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
-import axios from "axios";
-import numberService from "./services/Numbers";
+import NumberService from './services/Numbers'
 
 
 const App =() => {
-  const [ persons, setPersons ] = useState([])
+  const [ persons, setPersons ] = useState([
+    
+    
+  ])
+  
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState(0)
 
 
   useEffect(() => {
-    numberService
+    NumberService
     .getAll()
-    .then(initialNumbers => {
-      setPersons(initialNumbers)
-    })
+    .then(response => {
+      setPersons(response)
+      console.log(response);
+      })
   }, [])
 
   const addName = (event) => {
     event.preventDefault()
-    console.log('you clicked', event.target);
+    const names = persons.map(person => person.name)
+    console.log(names);
+  
+    if( names.includes(newName)) {
+      alert(`${newName} is already added to phonebook`)
+    }
+    else{
+      console.log('you clicked', event.target);
     const nameObject = {
       name: newName,
       number: newNumber
     }
 
-    numberService
+    NumberService
     .create(nameObject)
     .then(response => {
-      setPersons(persons.concat(response.data))
-      setNewName('')
-      setNewNumber('')
+      setPersons(persons.concat(response))
+    setNewName('')
+    setNewNumber('')
     })
 
-    // setPersons(persons.concat(nameObject))
-    // setNewName('')
-    // setNewNumber('')
+    }
+    
+    
   }
 
   const handleNameChange = (event) => {
@@ -55,12 +66,7 @@ const App =() => {
   : persons.filter(person=> person.important === true)
 
 
-  const names = persons.map(person => person.name)
-  console.log(names);
-
-  if( names.includes(newName)) {
-    alert(`${newName} is already added to phonebook`)
-  }
+ 
   
   return(
     <div>
