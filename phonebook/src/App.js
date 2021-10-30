@@ -2,16 +2,26 @@ import { useEffect, useState } from "react";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import NumberService from './services/Numbers'
+import './index.css'
 
+
+const Notification = ({message}) => {
+  if (message === null) {
+    return null
+  }
+
+  return(
+    <div className="success">
+    {message}
+  </div>
+  )
+}
 
 const App =() => {
-  const [ persons, setPersons ] = useState([
-    
-    
-  ])
-  
+  const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState(0)
+  const [ successMessage, setSuccessMessage ] = useState (null)
 
 
   useEffect(() => {
@@ -42,10 +52,14 @@ const App =() => {
     .create(nameObject)
     .then(response => {
       setPersons(persons.concat(response))
-    setNewName('')
+   setSuccessMessage( `Added ${nameObject.name}`)
+
+      setNewName('')
     setNewNumber('')
     })
-
+    setTimeout(() => {
+      setSuccessMessage(null)
+    },5000)
     }
     
     
@@ -79,6 +93,8 @@ const App =() => {
     <div>
       <h2>Phonebook</h2>
 
+      <Notification message={successMessage} />
+
       <h3>add a new</h3>
 
       <PersonForm addName={addName} 
@@ -92,6 +108,7 @@ const App =() => {
     </div>
   )
 }
+
 
 
 export default App;
